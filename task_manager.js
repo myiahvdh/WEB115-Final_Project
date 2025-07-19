@@ -1,10 +1,10 @@
 let allTasks = []; // array for all tasks
-let idCounter = 1;
+let idCounter = 1; // starts the ID assingment for each taskS
 let addTask = document.getElementById("task"); // locate form by id, assign variable
 
 makeformRequirements(); // call to prevent empty form data
 
-function makeformRequirements() {
+function makeformRequirements() { // sets form fields to required
     document.getElementById("taskName").required = true;
     document.getElementById("priorityLevel").required = true
     document.querySelector('input[name="importance"]').required = true;
@@ -17,7 +17,7 @@ addTask.addEventListener('submit', function(event) {
         window.alert("All fields must be populated before submission.")
         return; // stops running if form is missing data
     }
-    obtainFormValues();
+    obtainFormValues(); 
 }); 
 
 function obtainFormValues() {
@@ -54,60 +54,46 @@ function appendTaskToDiv(valuesArray) {
     let dateTime = new Date(); // make date/time object
     let dateTimeString = dateTime.toString(); // convert object value to string
 
-    // Create a new div for each task with an unordered list of data
+    // take array elements out of array, assign variables
+    let [taskName, priorityLevel, importance] = valuesArray;
+
     let taskDiv = document.createElement("div"); // create a div for the task inside the taskManager div
-    let mainUL = document.createElement("ul"); // make UL for div
-    taskDiv.appendChild(mainUL); // make UL child of div
 
-    let taskLI = document.createElement("li"); // task name
-    let priorityLI = document.createElement("li"); // priority level
-    let importanceLI = document.createElement("li"); // importance
-    let dateLI = document.createElement("li"); // date added
+    let checkboxID = `isCompleted-${idCounter}`; // make a template literal for the checkbox and id, makes a concatenated string unique id
 
-    let taskLIText = document.createTextNode("Task:  " + valuesArray[0]); // text for task name
-    let priorityLIText = document.createTextNode("Priority:  " + valuesArray[1]); // text for priority level
-    let importanceLIText = document.createTextNode("Important?: " + valuesArray[2]); // text for importance
-    let dateLIText = document.createTextNode("Date:  " + dateTimeString); // text for date object
+    //Use innerHTML this time, prority-li shared for styling
+    taskDiv.innerHTML = `
+    <ul>
+        <li class="priority-li">Task:   ${taskName} </li>
+        <li class="priority-li">Priority:   ${priorityLevel}</li>
+        <li>Important?:   ${importance}</li>
+        <li>Date:    ${dateTimeString}</li>
+    </ul>
+    <label for="${checkboxID}">
+        Completed <input type="checkbox" 
+        id="${checkboxID}"
+        value="completed">
+    </label>
+    <button class="deleteButton">Delete Task</button> 
+    `;
 
-    taskLI.appendChild(taskLIText); // append text to task element
-    priorityLI.appendChild(priorityLIText); // append text to priority level element
-    importanceLI.appendChild(importanceLIText); // append text to importance element
-    dateLI.appendChild(dateLIText); // append text to date element
+    // Append new div to main div
+    mainDiv = document.getElementById("taskManager");
+    mainDiv.appendChild(taskDiv);
 
-    // append LI elements to UL
-    mainUL.appendChild(taskLI);
-    mainUL.appendChild(priorityLI);
-    mainUL.appendChild(importanceLI);
-    mainUL.appendChild(dateLI);
+    // assign variables to DOM elements
+    let completedCheckbox = taskDiv.querySelector(`#${checkboxID}`);
+    let deleteButton = taskDiv.querySelector(".deleteButton");
 
-    // Completed checkbox
-    let completedCheckbox = document.createElement("input"); // create an input element 
-    completedCheckbox.type = "checkbox"; // make it's type a checkbox
-    completedCheckbox.id = "isCompleted"; // label an ID for the checkbox
-    completedCheckbox.value = "completed"; // value assigned to when box is checked
+    // Apply conditional styles
+    const ul = taskDiv.querySelector("ul");
+    const priorityLI = taskDiv.querySelectorAll(".priority-li")[1]; // 2nd <li> is priorityLevel
 
-    let label = document.createElement("label");
-    label.htmlFor = "isCompleted";
-    let checkboxText = document.createTextNode("Completed   ");
-    label.appendChild(checkboxText);
-
-    taskDiv.appendChild(completedCheckbox);
-    taskDiv.appendChild(label);
-
-    // Delete button
-    let deleteButton = document.createElement("button");
-    deleteButton.textContent = "Delete Task";
-
-    taskDiv.appendChild(deleteButton);
-
-    let taskManagerDiv = document.getElementById("taskManager");
-    taskManagerDiv.appendChild(taskDiv);
-
-    priorityStyler(valuesArray[1], priorityLI);
+    priorityStyler(priorityLevel, priorityLI);
 
     // importance handler
-    if (valuesArray[2] == "YES") {
-        mainUL.classList.add("red-background-and-bold-text")
+    if (importance == "YES") {
+        ul.classList.add("red-background-and-bold-text")
     }
 
     let isBoxChecked = completedCheckbox.checked; // grabs initial state of checkbox and stores it
@@ -139,14 +125,14 @@ function appendTaskToDiv(valuesArray) {
 
     })
 
-    // event handler for checkbox
+    // event handler for checkbox, applies styling
     completedCheckbox.addEventListener('change', function() {
-        if (this.checked) {
-            mainUL.classList.add("strikeThroughText")
+        if (this.checked) { 
+            ul.classList.add("strikeThroughText")
             jsObject.completed = true; // dynamically updates
         }
         else {
-            mainUL.classList.remove("strikeThroughText")
+            ul.classList.remove("strikeThroughText")
             jsObject.completed = false; // dynamically updates
         }
         console.log(JSON.stringify(allTasks, null, 4)); // updates console
