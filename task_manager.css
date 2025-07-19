@@ -1,0 +1,50 @@
+h1 {
+    text-align: center;
+    border: 4px solid aquamarine;
+    padding: 15px;
+    color: blue;
+    background-color: violet;
+    font-family: "Lucida Console", monospace;
+}
+
+body {
+    background-color: aliceblue;
+    background-image: url(background.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* no image scrolling */
+    opacity: 0.75;
+}
+
+.heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* left and right space*/
+    font-size: 3rem;
+}
+
+.heading-image {
+    height: 1em; /* references text height, matches*/
+    width: 2em;
+}
+
+.strikeThroughText {
+    text-decoration: line-through;
+}
+
+.red-background-and-bold-text {
+    background-color: red;
+    font-weight: bold;
+}
+.low-styler {
+    background-color: green;
+}
+
+.medium-styler {
+    background-color: yellow;
+}
+
+.high-styler {
+    background-color: orange;
+
+}

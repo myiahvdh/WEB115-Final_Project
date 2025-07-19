@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="task_manager.css">
+    <title>TaskFlow Solutions Task Manager</title>
+</head>
+<body>
+    <h1 class="heading">TaskFlow Task Manager
+        <img src="gear.png"
+        alt="gear icon" class="heading-image">
+    </h1> 
+    <form id="task">
+        <label for="taskName">Task Name:    </label>
+        <input type="text" id="taskName" placeholder="Type Intended Task"><br>
+
+        <label for="priorityLevel">Priority Level:</label>
+        <select name="priorityLevel" id="priorityLevel" required>
+            <option value="" disabled selected>Select Priority</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+
+        <p>Is The Task Important?</p>
+        <input type="radio" id="yes" name="importance" value="YES">
+        <label for="yes">YES</label><br>
+        <input type="radio" id="no" name="importance" value="NO">
+        <label for="no">NO</label><br>
+
+        <button type="submit" id="addTask">Add Task</button>
+    </form>
+    <div id = "taskManager">
+    </div>
+    <script src="task_manager.js"></script>
+</body>
+</html>
