@@ -42,7 +42,7 @@ function obtainFormValues() {
     const valuesArray = [taskNameValue, priorityLevelValue, importanceValue]
 
     // ...send array to function that creates and outputs json format
-    appendTaskToDiv(valuesArray); // call div population func ********************** probably needs to send isComplete over to createJson
+    appendTaskToDiv(valuesArray); // call div population func 
 
     // clear form
     let form = document.getElementById("task");
@@ -101,9 +101,9 @@ function appendTaskToDiv(valuesArray) {
     // create jsObject 
     let jsObject = {
         id: idCounter, 
-        taskName: valuesArray[0],
-        priorityLevel: valuesArray[1], 
-        important: valuesArray[2], 
+        taskName: taskName,
+        priorityLevel: priorityLevel, 
+        important: importance, 
         completed: completedCheckbox.checked, // initial value
         date: dateTimeString
     };
@@ -141,7 +141,7 @@ function appendTaskToDiv(valuesArray) {
     // add to id counter
     idCounter++;
 
-    console.log(JSON.stringify(allTasks, null, 4));
+    console.log(JSON.stringify(allTasks, null, 4));// updates console
 
 }
 
